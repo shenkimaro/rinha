@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^([\S]+)?$ index.php?request=$1 [L,QSA,PT]
