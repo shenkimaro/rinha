@@ -7,4 +7,4 @@ $loader['locais'][] = $appPath.'.persistencia';
 $loader['locais'][] = $appPath.'.persistencia.DTO';
 $loader['locais'][] = $appPath.'.persistencia.TDG';
 
-include(__DIR__."/../../library/autoload.php");
+include(__DIR__."/../library/autoload.php");
