@@ -3,53 +3,62 @@ version: '3.1'
 
 services:
 
-  caddy:
-    image: caddy
-    restart: always
-    ports:
-      - 80:80 
-    depends_on:
-      - app01
-      - app02  
-    deploy:
-      resources:
-        limits:
-          cpus: "0.3"
-          memory: "50MB"  
-
   app01: &app
-    image: php83
+    image: php:8.3-fpm-alpine3.19
     hostname: app01
     network_mode: host
     environment:
       - DB_HOSTNAME=db
       - PORT=9000
-    depends_on:
-      - db
-    deploy:
-      resources:
-        limits:
-          cpus: '0.35'
-          memory: '150MB'  
+    # depends_on:
+    #   - db
+    volumes:
+      - type: bind
+        source: /var/www/rinha/
+        target: /var/www/html/
+    #deploy:
+    #  resources:
+    #    limits:
+    #      cpus: '0.35'
+    #      memory: '150MB'  
 
-  app02:
-    <<: *app
-    hostname: app02      
+ # app02:
+ #   <<: *app
+ #   hostname: app02    
 
-  db:
-    image: postgres
+  nginx:
+    image: nginx
     restart: always
-    hostname: db
-    environment:
-      POSTGRES_PASSWORD: teste
     ports:
-      - 5432:5432  
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: "200MB"  
-    volumes: 
-      - rinha:/var/lib/postgresql/data
-volumes:
-  rinha:
+      - 9005:80 
+    depends_on:
+      - app01
+    #  - app02  
+   # deploy:
+   #   resources:
+   #     limits:
+   #       cpus: "0.3"
+   #       memory: "50MB"  
+    volumes:
+      - type: bind
+        source: /var/www/nginx/
+        target: /etc/nginx/conf.d/  
+
+
+#   db:
+#     image: postgres
+#     restart: always
+#     hostname: db
+#     environment:
+#       POSTGRES_PASSWORD: teste
+#     ports:
+#       - 5432:5432  
+#     deploy:
+#       resources:
+#         limits:
+#           cpus: "0.5"
+#           memory: "200MB"  
+#     volumes: 
+#       - rinha:/var/lib/postgresql/data
+# volumes:
+#   rinha:
