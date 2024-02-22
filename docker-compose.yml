@@ -1,12 +1,19 @@
 
 version: '3.1'
 
+networks:
+  rede_app:    
+    driver: bridge
+
 services:
 
   app01: &app
     image: php:8.3-fpm-alpine3.19
     hostname: app01
-    network_mode: host
+    networks:
+      rede_app:
+        aliases:
+          - app01
     environment:
       - DB_HOSTNAME=db
       - PORT=9000
@@ -14,7 +21,7 @@ services:
     #   - db
     volumes:
       - type: bind
-        source: /var/www/rinha/
+        source: /var/www/git/rinha/
         target: /var/www/html/
     #deploy:
     #  resources:
@@ -29,6 +36,8 @@ services:
   nginx:
     image: nginx
     restart: always
+    networks:
+      - rede_app
     ports:
       - 9005:80 
     depends_on:
@@ -41,7 +50,7 @@ services:
    #       memory: "50MB"  
     volumes:
       - type: bind
-        source: /var/www/nginx/
+        source: /var/www/git/rinha/nginx/
         target: /etc/nginx/conf.d/  
 
 
