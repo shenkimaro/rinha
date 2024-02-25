@@ -8,17 +8,20 @@ networks:
 services:
 
   app01: &app
+    container_name: php8.3-postgres
+    build:
+      dockerfile: ./php/Dockerfile
     image: php:8.3-fpm-alpine3.19
     hostname: app01
     networks:
       rede_app:
         aliases:
           - app01
-    # environment:
-      # - DB_HOSTNAME=db
-      # - PORT=9000
-    # depends_on:
-    #   - db
+    environment:
+      - DB_HOSTNAME=db
+      - PORT=9000
+    depends_on:
+      - db
     volumes:
       - type: bind
         source: /var/www/rinha/
@@ -29,9 +32,9 @@ services:
     #      cpus: '0.35'
     #      memory: '150MB'  
 
-  app02:
-    <<: *app
-    hostname: app02    
+  # app02:
+  #   <<: *app
+  #   hostname: app02    
 
   nginx:
     image: nginx
@@ -42,7 +45,7 @@ services:
       - 9090:80 
     depends_on:
       - app01
-      - app02  
+      # - app02  
    # deploy:
    #   resources:
    #     limits:
@@ -54,20 +57,24 @@ services:
         target: /etc/nginx/conf.d/  
 
 
-#   db:
-#     image: postgres
-#     restart: always
-#     hostname: db
-#     environment:
-#       POSTGRES_PASSWORD: teste
-#     ports:
-#       - 5432:5432  
-#     deploy:
-#       resources:
-#         limits:
-#           cpus: "0.5"
-#           memory: "200MB"  
-#     volumes: 
-#       - rinha:/var/lib/postgresql/data
-# volumes:
-#   rinha:
+  db:
+    image: postgres
+    restart: always
+    hostname: db
+    networks:
+      rede_app:
+        aliases:
+          - db
+    environment:
+      POSTGRES_PASSWORD: teste
+    ports:
+      - 5432:5432  
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "200MB"  
+    volumes: 
+      - rinha:/var/lib/postgresql/data
+volumes:
+  rinha:
