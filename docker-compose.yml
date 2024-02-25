@@ -14,14 +14,14 @@ services:
       rede_app:
         aliases:
           - app01
-    environment:
-      - DB_HOSTNAME=db
-      - PORT=9000
+    # environment:
+      # - DB_HOSTNAME=db
+      # - PORT=9000
     # depends_on:
     #   - db
     volumes:
       - type: bind
-        source: /var/www/git/rinha/
+        source: /var/www/rinha/
         target: /var/www/html/
     #deploy:
     #  resources:
@@ -39,7 +39,7 @@ services:
     networks:
       - rede_app
     ports:
-      - 9005:8080 
+      - 9090:80 
     depends_on:
       - app01
       - app02  
@@ -50,9 +50,8 @@ services:
    #       memory: "50MB"  
     volumes:
       - type: bind
-        source: /var/www/git/rinha/nginx/default.conf
-        target: /etc/nginx/nginx.conf:ro
-        #target: /etc/nginx/conf.d/  
+        source: /var/www/rinha/nginx/
+        target: /etc/nginx/conf.d/  
 
 
 #   db:
