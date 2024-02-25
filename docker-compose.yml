@@ -8,10 +8,7 @@ networks:
 services:
 
   app01: &app
-    # container_name: php8.3-postgres
-    # build:
-    #   dockerfile: ./php/Dockerfile
-    image: php8.3-postgres #php:8.3-fpm-alpine3.19
+    image: shenkimaro/php8.3-postgres
     hostname: app01
     networks:
       rede_app:
