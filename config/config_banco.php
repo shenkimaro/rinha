@@ -6,7 +6,7 @@ $configDb['desenvIp'] = "localhost:9090";
 
 //desenv
 $configDb['host'] = 'db';
-$configDb['bd'] = 'rinha';
+$configDb['bd'] = 'postgres';
 $configDb['login'] = 'postgres';
 $configDb['password'] = 'teste';
 
