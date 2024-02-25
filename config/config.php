@@ -23,12 +23,13 @@ function exception_error_handler($errno, $errstr, $errfile, $errline, $errcontex
 
 
 function processaURL() {
-    $request = Request::getString('request');
+    $request = isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:null;
     if($request == null){
         $rest = new Restful();
         $rest->printREST('Url inválida', Restful::STATUS_BAD_REQUEST);
     }
-    $parts = explode('/', $request);
+	
+    $parts = explode('/', substr($request, 1));
     if(count($parts) != 3){
         $rest = new Restful();
         $rest->printREST('Url inválida', Restful::STATUS_BAD_REQUEST);
