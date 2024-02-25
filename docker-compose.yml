@@ -8,10 +8,10 @@ networks:
 services:
 
   app01: &app
-    container_name: php8.3-postgres
-    build:
-      dockerfile: ./php/Dockerfile
-    image: php:8.3-fpm-alpine3.19
+    # container_name: php8.3-postgres
+    # build:
+    #   dockerfile: ./php/Dockerfile
+    image: php8.3-postgres #php:8.3-fpm-alpine3.19
     hostname: app01
     networks:
       rede_app:
@@ -26,15 +26,15 @@ services:
       - type: bind
         source: /var/www/rinha/
         target: /var/www/html/
-    #deploy:
-    #  resources:
-    #    limits:
-    #      cpus: '0.35'
-    #      memory: '150MB'  
+    deploy:
+     resources:
+       limits:
+         cpus: '0.35'
+         memory: '150MB'  
 
-  # app02:
-  #   <<: *app
-  #   hostname: app02    
+  app02:
+    <<: *app
+    hostname: app02    
 
   nginx:
     image: nginx
@@ -45,17 +45,16 @@ services:
       - 9090:80 
     depends_on:
       - app01
-      # - app02  
-   # deploy:
-   #   resources:
-   #     limits:
-   #       cpus: "0.3"
-   #       memory: "50MB"  
+      - app02  
+    deploy:
+     resources:
+       limits:
+         cpus: "0.3"
+         memory: "50MB"  
     volumes:
       - type: bind
         source: /var/www/rinha/nginx/
         target: /etc/nginx/conf.d/  
-
 
   db:
     image: postgres
