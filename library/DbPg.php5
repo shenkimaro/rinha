@@ -207,10 +207,7 @@ class DbPg {
 			}
 		} else {
 			$complementoMsg = " host: " . $this->host . ' db: ' . $this->db . ' user: ' . $this->login;
-			if(Util::isLocalIp()){
-				throw new ConectionDBException($mensagem_erro . $complementoMsg);
-			}
-			throw new ConectionDBException($mensagem_erro .". Banco de dados de produção.");
+			throw new ConectionDBException($mensagem_erro . $complementoMsg);
 		}
 	}
 

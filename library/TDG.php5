@@ -132,13 +132,7 @@ class TDG {
 		$conf = $GLOBALS['configDb'];
 		$conf['_sgbd'] = $conf['sgbd'] ?? 'DbPg';
 		$paramConnection = (!empty($array)) ? $array : $conf;
-		if (Util::isLocalIp() || Util::isBeta()) {
-			return self::getDbDev($paramConnection);
-		}
-		if (self::isProductionConnection()) {
-			return self::getDbProduction($paramConnection);
-		}
-		throw new Exception("Sem Conexao com {$_SERVER['HTTP_HOST']} ou {$_SERVER['SERVER_ADDR']}");
+		return self::getDbDev($paramConnection);
 	}
 
 	private static function isProductionConnection() {
@@ -628,7 +622,7 @@ class TDG {
 					continue;
 			}
 			$value = $dto->$methodName();
-			if (trim($value??'') == '')
+			if (trim($value ?? '') == '')
 				continue;
 			$value = $this->db->escape($value);
 			$sqlFields .= $sqlFields == "" ? $field : ", " . $field;
@@ -1052,5 +1046,4 @@ class TDG {
 	public function commit() {
 		$this->db->commit();
 	}
-
 }

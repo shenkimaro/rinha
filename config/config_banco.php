@@ -2,10 +2,10 @@
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\///\\//\\//
 //Db Desenvolvimento
-$configDb['desenvIp'] = "127.0.1.1";
+$configDb['desenvIp'] = "localhost:9090";
 
 //desenv
-$configDb['host'] = 'localhost';
+$configDb['host'] = 'db';
 $configDb['bd'] = 'rinha';
 $configDb['login'] = 'postgres';
 $configDb['password'] = 'teste';
