@@ -13,14 +13,7 @@ class ControlClientes extends Controller {
     }
 
     public function index() {
-        try {
-            $this->rest->printREST([
-                "Ok" => 1
-            ]);
-        } catch (Exception $e) {
-            $data['mensagem'] = $e->getMessage();
-            $this->rest->printREST($data, Restful::STATUS_BAD_REQUEST);
-        }
+        $this->rest->printREST(['mensagem'=>'endpoint não encontrado'], Restful::STATUS_BAD_REQUEST);
     }
 
     public function transacoes() {
