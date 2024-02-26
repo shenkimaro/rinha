@@ -21,7 +21,7 @@ services:
       - db
     volumes:
       - type: bind
-        source: /var/www/rinha/
+        source: .
         target: /var/www/html/
     deploy:
      resources:
@@ -50,7 +50,7 @@ services:
          memory: "50MB"  
     volumes:
       - type: bind
-        source: /var/www/rinha/container/nginx/
+        source: ./container/nginx/
         target: /etc/nginx/conf.d/  
 
   db:
@@ -64,7 +64,7 @@ services:
     environment:
       POSTGRES_PASSWORD: teste
     ports:
-      - 5432:5432  
+      - 5433:5432  
     deploy:
       resources:
         limits:
