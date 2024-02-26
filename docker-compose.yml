@@ -23,6 +23,7 @@ services:
       - type: bind
         source: .
         target: /var/www/html/
+        #/usr/local/etc/php-fpm.d/www.conf testar configuraçao de fpm
     deploy:
      resources:
        limits:
@@ -50,8 +51,8 @@ services:
          memory: "50MB"  
     volumes:
       - type: bind
-        source: ./container/nginx/
-        target: /etc/nginx/conf.d/  
+        source: ./container/nginx/nginx.conf
+        target: /etc/nginx/nginx.conf  
 
   db:
     image: postgres
@@ -64,7 +65,7 @@ services:
     environment:
       POSTGRES_PASSWORD: teste
     ports:
-      - 5433:5432  
+      - 5432:5432  
     deploy:
       resources:
         limits:

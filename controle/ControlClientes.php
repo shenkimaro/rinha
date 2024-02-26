@@ -18,15 +18,17 @@ class ControlClientes extends Controller {
 
     public function transacoes() {
         try {
-            $valor = Post::getInt('valor');
+			$json = file_get_contents('php://input');
+			$request = json_decode($json);
+            $valor = $request->valor;
             if($valor == null){
                 throw new Exception('Valor é inválido');
             }
-            $tipo = strtolower(Post::getString('tipo','x'));
+            $tipo = strtolower($request->tipo);
             if(!in_array($tipo, ['c','d'])){
                 throw new Exception('Tipo é inválido');
             }
-            $descricao = strtolower(Post::getString('descricao'));
+            $descricao = strtolower($request->descricao);
             if($descricao == null || strlen($descricao) > 10){
                 throw new Exception('Descrição é inválido');
             }
