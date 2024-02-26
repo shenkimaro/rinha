@@ -12,7 +12,8 @@ class MovimentacaoTDG {
 				from public.clientes c
 				left join public.movimentacao m on m.fk_clientes = c.id 
 				where c.id = {$idCliente}
-				order by 1 desc";
+				order by m.data_hora desc
+				limit 10";
             
          return TDG::getInstance()->genericQuery($sql);   
     }

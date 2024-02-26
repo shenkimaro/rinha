@@ -30,7 +30,8 @@ class ControlClientes extends Controller {
             if($descricao == null || strlen($descricao) > 10){
                 throw new Exception('Descrição é inválido');
             }
-            $cliente = ClientesTDG::change(new Clientes(['saldo'=>$valor, 'id'=>Request::getInt('id',0)]), $tipo,$descricao);
+			$idCliente = Request::getInt('id',0);
+            $cliente = ClientesTDG::change(new Clientes(['saldo'=>$valor, 'id'=>$idCliente]), $tipo,$descricao);
             $this->rest->printREST([
                 "limite" => $cliente->getLimite(),
                 "saldo" => $cliente->getSaldo(),

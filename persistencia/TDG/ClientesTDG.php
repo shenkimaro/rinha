@@ -24,10 +24,10 @@ class ClientesTDG {
         $sql = "update clientes set saldo = saldo $acao {$valor} "
                 . "where id = {$cliente->getId()} returning *;";
         $cliente = new Clientes($tdg->genericQuery($sql)[0]);
-        if($cliente->getSaldo() < 0){
+        if($cliente->getSaldo() < (-1*$cliente->getLimite())){
             $tdg->rollback();
             $rest = new Restful();
-            $rest->printREST('O saldo não pode ficar negativo', 422);
+            $rest->printREST('O saldo estourou o seu limite', 422);
         }
         $movimentacao = new Movimentacao([]);
         $movimentacao->setValor($valor);
