@@ -20,7 +20,7 @@ class ControlClientes extends Controller {
         try {
 			$json = file_get_contents('php://input');
 			$request = json_decode($json);
-            $valor = $request->valor;
+            $valor = (int)$request->valor;
             if($valor == null){
                 throw new Exception('Valor é inválido');
             }
