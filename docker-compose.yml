@@ -23,7 +23,9 @@ services:
       - type: bind
         source: .
         target: /var/www/html/
-        #/usr/local/etc/php-fpm.d/www.conf testar configuraçao de fpm
+      - type: bind
+        source: container/php/www.conf
+        target: /usr/local/etc/php-fpm.d/www.conf #testar configuraçao de fpm
     deploy:
      resources:
        limits:
