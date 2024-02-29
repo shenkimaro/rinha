@@ -1,4 +1,6 @@
 
+ALTER SYSTEM SET shared_buffers TO 128M;
+
 --DROP TABLE public.clientes;
 
 begin;
