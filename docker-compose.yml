@@ -30,7 +30,7 @@ services:
      resources:
        limits:
          cpus: '0.3'
-         memory: '210MB'  
+         memory: '175MB'  
 
   app02:
     <<: *app
@@ -50,7 +50,7 @@ services:
      resources:
        limits:
          cpus: "0.4"
-         memory: "60MB"  
+         memory: "40MB"  
     volumes:
       - type: bind
         source: ./container/nginx/nginx.conf
@@ -67,15 +67,15 @@ services:
     environment:
       POSTGRES_PASSWORD: teste
     ports:
-      - 5432:5432  
+      - 5433:5432  
     deploy:
       resources:
         limits:
           cpus: "0.5"
-          memory: "150MB"  
+          memory: "160MB"  
     volumes: 
       - rinha:/var/lib/postgresql/datas
       - ./container/script.sql:/docker-entrypoint-initdb.d/init.sql
-    command: postgres -c checkpoint_timeout=600 -c max_wal_size=4096 -c synchronous_commit=0 -c full_page_writes=0
+    command: postgres -c checkpoint_timeout=600 -c max_wal_size=4096 -c synchronous_commit=0 -c full_page_writes=0 
 volumes:
   rinha:
