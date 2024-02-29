@@ -20,17 +20,14 @@ class ControlClientes extends Controller {
         try {
 			$json = file_get_contents('php://input');
 			$request = json_decode($json);
-            $valor = (int)$request->valor;
-            if($valor == null){
-                throw new Exception('Valor é inválido');
-            }
-            $tipo = strtolower($request->tipo);
+            $valor = (int) $request->valor;
+			$tipo = strtolower($request->tipo);
             if(!in_array($tipo, ['c','d'])){
                 throw new Exception('Tipo é inválido');
             }
             $descricao = strtolower($request->descricao);
-            if($descricao == null || strlen($descricao) > 10){
-                throw new Exception('Descrição é inválido');
+            if (strlen($descricao) <= 0 || strlen($descricao) > 10) {
+				throw new Exception('Descrição é inválido');
             }
 			$idCliente = Request::getInt('id',0);
             $cliente = ClientesTDG::change(new Clientes(['saldo'=>$valor, 'id'=>$idCliente]), $tipo,$descricao);
@@ -46,7 +43,7 @@ class ControlClientes extends Controller {
 	
 	public function extrato() {
         try {
-            $movimentacao = MovimentacaoTDG::getExtrato(Request::getInt('id',0));
+			$movimentacao = MovimentacaoTDG::getExtrato(Request::getInt('id', 0));
 			$data = [];
 			foreach ($movimentacao as $registro) {
 				if(empty($registro['tipo'])){
