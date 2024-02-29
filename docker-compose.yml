@@ -29,8 +29,8 @@ services:
     deploy:
      resources:
        limits:
-         cpus: '0.35'
-         memory: '150MB'  
+         cpus: '0.3'
+         memory: '210MB'  
 
   app02:
     <<: *app
@@ -49,8 +49,8 @@ services:
     deploy:
      resources:
        limits:
-         cpus: "0.3"
-         memory: "50MB"  
+         cpus: "0.4"
+         memory: "60MB"  
     volumes:
       - type: bind
         source: ./container/nginx/nginx.conf
@@ -72,7 +72,7 @@ services:
       resources:
         limits:
           cpus: "0.5"
-          memory: "200MB"  
+          memory: "150MB"  
     volumes: 
       - rinha:/var/lib/postgresql/datas
       - ./container/script.sql:/docker-entrypoint-initdb.d/init.sql
