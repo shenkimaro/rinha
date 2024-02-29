@@ -40,7 +40,7 @@ class ControlClientes extends Controller {
             ]);
         } catch (Exception $e) {
             $data['mensagem'] = $e->getMessage();
-            $this->rest->printREST($data, Restful::STATUS_BAD_REQUEST);
+            $this->rest->printREST($data, 422);
         }
     }
 	
